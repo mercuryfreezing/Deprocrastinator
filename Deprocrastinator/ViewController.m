@@ -88,12 +88,27 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
 
             [[self.tableView cellForRowAtIndexPath:indexPath] showsReorderControl];
-    [self.toDoItems removeObjectAtIndex:indexPath.row];
-    NSArray *indexPathArray = [NSArray arrayWithObject:indexPath];
-    [self.tableView deleteRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationAutomatic];
-//    [self.tableView setEditing:NO];
 
-    [self.editDoneButton setTitle:@"Edit" forState:UIControlStateNormal];
+    UIAlertView *alertView = [[UIAlertView alloc] init];
+    alertView.delegate = self;
+    [alertView addButtonWithTitle:@"Confirm"];
+    [alertView addButtonWithTitle:@"Cancel"];
+    [alertView show];
+
+    if([alertView.title  isEqualToString:@"Confirm"])
+    {
+        [self.toDoItems removeObjectAtIndex:indexPath.row];
+        NSArray *indexPathArray = [NSArray arrayWithObject:indexPath];
+
+
+        [self.tableView deleteRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationAutomatic];
+        //    [self.tableView setEditing:NO];
+
+        [self.editDoneButton setTitle:@"Edit" forState:UIControlStateNormal];
+
+    }
+
+
 
 }
 
